@@ -1,2 +1,3 @@
 https://www.stereolabs.com/docs/ros/
 https://www.stereolabs.com/docs/installation/linux/ 
+https://download.stereolabs.com/zedsdk/3.1/ubuntu18/cu100/py36  # this worked for me (https://www.stereolabs.com/docs/app-development/python/install/)
