@@ -1,0 +1,60 @@
+https://www.stereolabs.com/docs/opencv/python/
+
+########################################################################
+#
+# Copyright (c) 2020, STEREOLABS.
+#
+# All rights reserved.
+#
+# THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+# "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+# LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+# A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT
+# OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL,
+# SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT
+# LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE,
+# DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY
+# THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+# (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
+# OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+#
+########################################################################
+
+import pyzed.sl as sl
+import cv2
+import time
+def main():
+    # Create a Camera object
+    zed = sl.Camera()
+
+    # Create a InitParameters object and set configuration parameters
+    init_params = sl.InitParameters()
+    init_params.sdk_verbose = False
+
+    # Open the camera
+    err = zed.open(init_params)
+    if err != sl.ERROR_CODE.SUCCESS:
+        exit(1)
+
+    # Get camera information (ZED serial number)
+    zed_serial = zed.get_camera_information().serial_number
+    print("Hello! This is my serial number: {0}".format(zed_serial))
+    # Create an RGBA sl.Mat object
+    image_zed = sl.Mat(zed.get_camera_information().camera_resolution.width, zed.get_camera_information().camera_resolution.height, sl.MAT_TYPE.U8_C4)
+    # Retrieve data in a numpy array with get_data()
+    image_ocv = image_zed.get_data()
+    if zed.grab() == sl.ERROR_CODE.SUCCESS :
+	    print(11111111111111111111111111111111111)
+	    # Retrieve the left image in sl.Mat
+	    zed.retrieve_image(image_zed, sl.VIEW.LEFT)
+	    # Use get_data() to get the numpy array
+	    image_ocv = image_zed.get_data()
+	    # Display the left image from the numpy array
+	    cv2.imshow("Image", image_ocv)
+	    cv2.imwrite("zakir.jpg", image_ocv) 
+	    # Close the camera
+	    #time.sleep(200)	
+    zed.close()
+
+if __name__ == "__main__":
+    main()
