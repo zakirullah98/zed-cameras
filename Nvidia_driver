@@ -1,3 +1,7 @@
+#check versions here
+https://www.nvidia.com/Download/Find.aspx
+
+
 sudo apt autoremove nvidia-dri
 
 
